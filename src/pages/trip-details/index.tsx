@@ -1,10 +1,12 @@
 import {
    Calendar,
    CircleCheck,
+   CircleDashed,
    Link2,
    MapPin,
    Plus,
    Settings2,
+   UserCog,
 } from "lucide-react";
 
 const TripDetailsPage = () => {
@@ -135,6 +137,41 @@ const TripDetailsPage = () => {
                </div>
 
                <div className="w-full h-px bg-zinc-800"></div>
+
+               <div className="space-y-6">
+                  <h2 className="font-semibold text-xl">Convidados</h2>
+
+                  <div className="space-y-5">
+                     <div className="flex items-center justify-between gap-4">
+                        <div className="space-y-1.5 text">
+                           <span className="block font-medium text-zinc-100">
+                              Jessica White
+                           </span>
+                           <span className="block text-sm text-zinc-400 truncate">
+                              jessica.white44@yahoo.com
+                           </span>
+                        </div>
+                        <CircleDashed className="size-5 text-zinc-400 shrink-0" />
+                     </div>
+
+                     <div className="flex items-center justify-between gap-4">
+                        <div className="space-y-1.5 text">
+                           <span className="block font-medium text-zinc-100">
+                              Dr. Rita Pacocha
+                           </span>
+                           <span className="block text-sm text-zinc-400 truncate">
+                              lacy.stiedemann@gmail.com
+                           </span>
+                        </div>
+                        <CircleDashed className="size-5 text-zinc-400 shrink-0" />
+                     </div>
+                  </div>
+
+                  <button className="flex items-center gap-2 w-full bg-zinc-800 justify-center text-zinc-300 rounded-lg px-5 h-11 font-medium hover:bg-zinc-700">
+                     <UserCog className="size-5" />
+                     Gerenciar convidados
+                  </button>
+               </div>
             </section>
          </main>
       </div>
