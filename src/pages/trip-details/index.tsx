@@ -8,11 +8,23 @@ import {
    Settings2,
    UserCog,
 } from "lucide-react";
+import { useState } from "react";
+import CreateActivityModal from "./components/create-activity-modal";
 
 const TripDetailsPage = () => {
+   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
+      useState<boolean>(false);
+
+   function handleCreateActivityModalClick() {
+      if (isCreateActivityModalOpen === true) {
+         return setIsCreateActivityModalOpen(false);
+      }
+      setIsCreateActivityModalOpen(true);
+   }
+
    return (
       <div className="max-w-6xl py-10 mx-auto space-y-8">
-         <header className="px-4 h-16 rounded-xl bg-zinc-900 shadow-shape flex items-center justify-between">
+         <header className="px-4 h-16 rounded-xl bg-zinc-90c0 shadow-shape flex items-center justify-between">
             <div className="flex items-center gap-2">
                <MapPin className="size-5 text-zinc-400" />
                <span className="text-zinc-100">Florianópolis, Brasil</span>
@@ -37,7 +49,10 @@ const TripDetailsPage = () => {
                <div className="flex items-center justify-between">
                   <h2 className="text-3xl font-semibold">Atividades</h2>
 
-                  <button className="flex items-center gap-2 bg-lime-300 text-lime-950 rounded-lg px-5 py-2 font-medium hover:bg-lime-400">
+                  <button
+                     onClick={handleCreateActivityModalClick}
+                     className="flex items-center gap-2 bg-lime-300 text-lime-950 rounded-lg px-5 py-2 font-medium hover:bg-lime-400"
+                  >
                      <Plus className="size-5" />
                      Cadastrar atividade
                   </button>
@@ -174,6 +189,12 @@ const TripDetailsPage = () => {
                </div>
             </section>
          </main>
+
+         {isCreateActivityModalOpen && (
+            <CreateActivityModal
+               handleCreateActivityModalClick={handleCreateActivityModalClick}
+            />
+         )}
       </div>
    );
 };
