@@ -1,18 +1,20 @@
 import {
    ArrowRight,
-   AtSign,
    Calendar,
    Mail,
    MapPin,
-   Plus,
    Settings2,
    User,
    UserRoundPlus,
    X,
 } from "lucide-react";
 import { FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import InviteGuestsModal from "./components/invite-guests-modal";
 
 function CreateTrip() {
+   const navigate = useNavigate();
+
    const [isGuestInputOpen, setIsGuestInputOpen] = useState<boolean>(false);
    const [isGuestModalOpen, setIsGuestModalOpen] = useState<boolean>(false);
    const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] =
@@ -67,6 +69,10 @@ function CreateTrip() {
       );
 
       setEmailToInvite(newEmailList);
+   }
+
+   function createTrip() {
+      navigate("/trips/123");
    }
 
    return (
@@ -131,7 +137,7 @@ function CreateTrip() {
 
                         {emailToInvite.length > 0 ? (
                            <span className="text-lg text-zinc-400 flex-1">
-                              {emailToInvite.length} pessoa(s) convidada(S)
+                              {emailToInvite.length} pessoa(s) convidada(s)
                            </span>
                         ) : (
                            <span className="text-lg text-zinc-400 flex-1">
@@ -166,74 +172,13 @@ function CreateTrip() {
          </div>
 
          {isGuestModalOpen && (
-            <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-               <div className="w-[640px] rounded-xl bg-zinc-900 py-5 px-6 shadow-shape space-y-5">
-                  <div className="space-y-2">
-                     <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-semibold">
-                           selecionar convidados
-                        </h2>
-
-                        <button type="button" onClick={handleGuestModalClick}>
-                           <X className="size-5 text-zinc-400" />
-                        </button>
-                     </div>
-
-                     <p className="text-sm text-zinc-400">
-                        Os convidados irão receber e-mails para confirmar a
-                        participação na viagem.
-                     </p>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                     {emailToInvite.map((email) => (
-                        <div
-                           key={email}
-                           className="py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2"
-                        >
-                           <span className="text-zinc-300">{email}</span>
-                           <button
-                              onClick={() => removeEmailToInvite(email)}
-                              type="button"
-                           >
-                              <X className="size-3 text-zinc-400" />
-                           </button>
-                        </div>
-                     ))}
-                  </div>
-
-                  <div className="w-full h-px bg-zinc-800"></div>
-
-                  <div className="flex flex-col gap-1">
-                     <form
-                        onSubmit={addToemailToInvite}
-                        className="p-2.5 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2"
-                     >
-                        <div className="px-2 flex items-center flex-1 gap-2">
-                           <AtSign className="size-5 text-zinc-400" />
-                           <input
-                              type="email"
-                              name="email"
-                              placeholder="Digite o email do convidado"
-                              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 "
-                           />
-                        </div>
-                        <button
-                           type="submit"
-                           className="flex items-center gap-2 bg-lime-300 text-lime-950 rounded-lg px-5 py-2 font-medium hover:bg-lime-400"
-                        >
-                           Convidar <Plus className="size-5" />
-                        </button>
-                     </form>
-
-                     <p
-                        className={`text-sm ${repeatedEmail} text-red-500 px-1 pt-[-20px]`}
-                     >
-                        Este email já foi adicionado
-                     </p>
-                  </div>
-               </div>
-            </div>
+            <InviteGuestsModal
+               handleGuestModalClick={handleGuestModalClick}
+               removeEmailToInvite={removeEmailToInvite}
+               addToemailToInvite={addToemailToInvite}
+               emailToInvite={emailToInvite}
+               repeatedEmail={repeatedEmail}
+            />
          )}
 
          {isConfirmTripModalOpen && (
@@ -288,6 +233,7 @@ function CreateTrip() {
                         </div>
 
                         <button
+                           onClick={createTrip}
                            type="submit"
                            className="flex items-center gap-2 w-full justify-center bg-lime-300 text-lime-950 rounded-lg px-5 h-11 font-medium hover:bg-lime-400"
                         >
