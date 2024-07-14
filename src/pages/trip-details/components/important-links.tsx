@@ -3,6 +3,7 @@ import Button from "../../../components/button";
 import { api } from "../../../lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CreateLinkModal from "./create-link-modal";
 
 interface Links {
    id: string;
@@ -12,6 +13,15 @@ interface Links {
 
 const ImportantLinks = () => {
    const [links, setLinks] = useState<Links[]>([]);
+   const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] =
+      useState<boolean>(false);
+
+   const handleCreateLinkModalClick = () => {
+      if (isCreateLinkModalOpen === true) {
+         return setIsCreateLinkModalOpen(false);
+      }
+      setIsCreateLinkModalOpen(true);
+   };
 
    const { tripId } = useParams();
 
@@ -47,10 +57,20 @@ const ImportantLinks = () => {
             ))}
          </div>
 
-         <Button variant="secondary" size="full">
+         <Button
+            onClick={handleCreateLinkModalClick}
+            variant="secondary"
+            size="full"
+         >
             <Plus className="size-5" />
             Cadastrar novo link
          </Button>
+
+         {isCreateLinkModalOpen && (
+            <CreateLinkModal
+               handleCreateActivityModalClick={handleCreateLinkModalClick}
+            />
+         )}
       </div>
    );
 };
