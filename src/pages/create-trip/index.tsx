@@ -16,7 +16,7 @@ function CreateTrip() {
       useState<boolean>(false);
    const [repeatedEmail, setRepeatedEmail] = useState<string>("hidden");
 
-   // informções para enviar para o servidor
+   // salvar informções para enviar para o servidor
    const [destination, setDestination] = useState<string>("");
    const [ownerName, setOwnerName] = useState<string>("");
    const [ownerEmail, setOwnerEmail] = useState<string>("");
@@ -74,16 +74,9 @@ function CreateTrip() {
       setEmailToInvite(newEmailList);
    }
 
+   // enviar as informações para o servidor
    async function createTrip(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
-
-      console.log({
-         destination,
-         ownerName,
-         ownerEmail,
-         emailToInvite,
-         eventStartAndEndDate,
-      });
 
       if (
          !destination ||
