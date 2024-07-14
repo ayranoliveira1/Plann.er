@@ -92,7 +92,7 @@ function CreateTrip() {
          destination,
          starts_at: eventStartAndEndDate?.from,
          ends_at: eventStartAndEndDate?.to,
-         emails_to_invite: [...emailToInvite],
+         emails_to_invite: emailToInvite,
          owner_name: ownerName,
          owner_email: ownerEmail,
       });
