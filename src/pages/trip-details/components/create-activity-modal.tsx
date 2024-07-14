@@ -3,6 +3,7 @@ import Button from "../../../components/button";
 import { FormEvent } from "react";
 import { api } from "../../../lib/api";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface CreateActivityModalProps {
    handleCreateActivityModalClick: () => void;
@@ -28,7 +29,13 @@ const CreateActivityModal = ({
 
       handleCreateActivityModalClick();
 
-      window.document.location.reload();
+      toast.success("Atividade criada com sucesso!", {
+         position: "top-right",
+      });
+
+      setTimeout(() => {
+         window.document.location.reload();
+      }, 6000);
    }
 
    return (
