@@ -4,6 +4,7 @@ import InviteGuestsModal from "./components/invite-guests-modal";
 import ConfirmTripModal from "./components/confirm-trip-modal";
 import DestinationAdnDateStep from "./components/steps/destination-and-date-step";
 import InviteGuestsStep from "./components/steps/invite-guests-step";
+import { DateRange } from "react-day-picker";
 
 function CreateTrip() {
    const navigate = useNavigate();
@@ -12,9 +13,17 @@ function CreateTrip() {
    const [isGuestModalOpen, setIsGuestModalOpen] = useState<boolean>(false);
    const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] =
       useState<boolean>(false);
+   const [repeatedEmail, setRepeatedEmail] = useState<string>("hidden");
+
+   // informções para enviar para o servidor
+   const [destination, setDestination] = useState<string>("");
+   const [ownerName, setOwnerName] = useState<string>("");
+   const [ownerEmail, setOwnerEmail] = useState<string>("");
+   const [eventStartAndEndDate, setEventStartAndEndDate] = useState<
+      DateRange | undefined
+   >();
 
    const [emailToInvite, setEmailToInvite] = useState<string[]>([]);
-   const [repeatedEmail, setRepeatedEmail] = useState<string>("hidden");
 
    function handleGuestInputClick() {
       if (isGuestInputOpen === true) {
@@ -67,6 +76,14 @@ function CreateTrip() {
    function createTrip(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
 
+      console.log({
+         destination,
+         ownerName,
+         ownerEmail,
+         emailToInvite,
+         eventStartAndEndDate,
+      });
+
       navigate("/trips/123");
    }
 
@@ -84,6 +101,9 @@ function CreateTrip() {
                <DestinationAdnDateStep
                   handleGuestInputClick={handleGuestInputClick}
                   isGuestInputOpen={isGuestInputOpen}
+                  setDestination={setDestination}
+                  setEventStartAndEndDate={setEventStartAndEndDate}
+                  eventStartAndEndDate={eventStartAndEndDate}
                />
 
                {isGuestInputOpen && (
@@ -124,6 +144,8 @@ function CreateTrip() {
                handleConfirmTripModalClick={handleConfirmTripModalClick}
                createTrip={createTrip}
                repeatedEmail={repeatedEmail}
+               setOwnerEmail={setOwnerEmail}
+               setOwnerName={setOwnerName}
             />
          )}
       </main>

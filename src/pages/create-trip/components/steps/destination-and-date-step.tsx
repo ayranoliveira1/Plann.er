@@ -8,16 +8,21 @@ import { format } from "date-fns";
 interface DestinationAdnDateStepProps {
    isGuestInputOpen: boolean;
    handleGuestInputClick: () => void;
+   setDestination: (destination: string) => void;
+   setEventStartAndEndDate: (
+      eventStartAndEndDate: DateRange | undefined
+   ) => void;
+   eventStartAndEndDate: DateRange | undefined;
 }
 
 const DestinationAdnDateStep = ({
    isGuestInputOpen,
    handleGuestInputClick,
+   setDestination,
+   eventStartAndEndDate,
+   setEventStartAndEndDate,
 }: DestinationAdnDateStepProps) => {
    const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
-   const [eventStartAndEndDate, setEventStartAndEndDate] = useState<
-      DateRange | undefined
-   >();
 
    function handleDatePickerClick() {
       if (isDatePickerOpen === true) {
@@ -42,6 +47,7 @@ const DestinationAdnDateStep = ({
                placeholder="Para onde você vai?"
                className="bg-transparent text-lg placeholder-zinc-400 flex-1 outline-none"
                disabled={isGuestInputOpen}
+               onChange={(event) => setDestination(event.target.value)}
             />
          </div>
 
