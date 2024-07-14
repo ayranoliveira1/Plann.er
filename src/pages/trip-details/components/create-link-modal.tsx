@@ -3,6 +3,7 @@ import Button from "../../../components/button";
 import { FormEvent } from "react";
 import { api } from "../../../lib/api";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface CreateLinkModalProps {
    handleCreateActivityModalClick: () => void;
@@ -16,19 +17,31 @@ const CreateLinkModal = ({
    async function createLink(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
 
-      const data = new FormData(event.currentTarget);
+      try {
+         const data = new FormData(event.currentTarget);
 
-      const title = data.get("title")?.toString();
-      const url = data.get("url")?.toString();
+         const title = data.get("title")?.toString();
+         const url = data.get("url")?.toString();
 
-      await api.post(`trips/${tripId}/links`, {
-         title,
-         url,
-      });
+         await api.post(`trips/${tripId}/links`, {
+            title,
+            url,
+         });
 
-      handleCreateActivityModalClick();
+         handleCreateActivityModalClick();
 
-      window.document.location.reload();
+         toast.success("Link criado com sucesso!", {
+            position: "top-right",
+         });
+
+         setTimeout(() => {
+            window.document.location.reload();
+         }, 6000);
+      } catch (error) {
+         toast.error("Erro ao criar link!", {
+            position: "top-right",
+         });
+      }
    }
 
    return (
