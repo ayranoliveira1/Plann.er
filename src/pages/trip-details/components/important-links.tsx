@@ -27,7 +27,10 @@ const ImportantLinks = () => {
 
          <div className="space-y-5">
             {links.map((link) => (
-               <div className="flex items-center justify-between gap-4">
+               <div
+                  key={link.id}
+                  className="flex items-center justify-between gap-4"
+               >
                   <div className="space-y-1.5 text">
                      <span className="block font-medium text-zinc-100">
                         {link.title}

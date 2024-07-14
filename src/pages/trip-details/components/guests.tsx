@@ -28,7 +28,10 @@ const Guests = () => {
 
          <div className="space-y-5">
             {participants.map((participant, index) => (
-               <div className="flex items-center justify-between gap-4">
+               <div
+                  key={participant.id}
+                  className="flex items-center justify-between gap-4"
+               >
                   <div className="space-y-1.5 text">
                      <span className="block font-medium text-zinc-100">
                         {participant.name ?? `Convidado ${index}`}
