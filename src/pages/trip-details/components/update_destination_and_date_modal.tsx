@@ -4,6 +4,9 @@ import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import "react-day-picker/dist/style.css";
+import { api } from "../../../lib/api";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface UpdateDestinationAndDateModalProps {
    handleUpdateDestinationAndDateModalClick: () => void;
@@ -13,9 +16,44 @@ const UpdateDestinationAndDateModal = ({
    handleUpdateDestinationAndDateModalClick,
 }: UpdateDestinationAndDateModalProps) => {
    const [isDatePickerOpen, setIsDatePickerOpen] = useState<boolean>(false);
+   const [destination, setDestination] = useState<string>("");
    const [eventStartAndEndDate, setEventStartAndEndDate] = useState<
       DateRange | undefined
    >();
+
+   const { tripId } = useParams();
+
+   async function updateTrip() {
+      try {
+         if (
+            !destination ||
+            !eventStartAndEndDate?.from ||
+            !eventStartAndEndDate?.to
+         ) {
+            return;
+         }
+
+         await api.put(`trips/${tripId}`, {
+            destination,
+            starts_at: eventStartAndEndDate.from,
+            ends_at: eventStartAndEndDate.to,
+         });
+
+         handleUpdateDestinationAndDateModalClick();
+
+         toast.success("Viagem atualizada com sucesso!", {
+            position: "top-right",
+         });
+
+         setTimeout(() => {
+            window.document.location.reload();
+         }, 6000);
+      } catch (error) {
+         toast.error("Erro ao atualizar viagem!", {
+            position: "top-right",
+         });
+      }
+   }
 
    function handleDatePickerClick() {
       if (isDatePickerOpen === true) {
@@ -36,7 +74,7 @@ const UpdateDestinationAndDateModal = ({
          <div className="w-[640px] rounded-xl bg-zinc-900 py-5 px-6 shadow-shape space-y-5">
             <div className="space-y-2">
                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold">Cadastrar atividade</h2>
+                  <h2 className="text-lg font-semibold">Atualiza viagem</h2>
 
                   <button
                      type="button"
@@ -47,7 +85,7 @@ const UpdateDestinationAndDateModal = ({
                </div>
 
                <p className="text-sm text-zinc-400">
-                  Todos convidados podem visualizar as atividades.
+                  Todos convidados podem visualizar o local e data da viagem.
                </p>
             </div>
 
@@ -57,8 +95,9 @@ const UpdateDestinationAndDateModal = ({
                      <MapPin className="size-5 text-zinc-400" />
                      <input
                         name="title"
-                        placeholder="Qual a atividade?"
+                        placeholder="Destino"
                         className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1 "
+                        onChange={(event) => setDestination(event.target.value)}
                      />
                   </div>
 
@@ -69,7 +108,7 @@ const UpdateDestinationAndDateModal = ({
                      >
                         <Calendar className="size-5 text-zinc-400" />
                         <span className="bg-transparent text-lg text-zinc-400 w-32 outline-none flex-1">
-                           {displayedDate || "Quando?"}
+                           {displayedDate || "Data"}
                         </span>
                      </button>
 
@@ -101,7 +140,7 @@ const UpdateDestinationAndDateModal = ({
                      )}
                   </div>
 
-                  <Button size="full" type="submit">
+                  <Button onClick={updateTrip} size="full" type="submit">
                      Salvar atividade
                   </Button>
                </div>
