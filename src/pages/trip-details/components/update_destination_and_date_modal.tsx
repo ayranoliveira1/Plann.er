@@ -141,7 +141,7 @@ const UpdateDestinationAndDateModal = ({
                   </div>
 
                   <Button onClick={updateTrip} size="full" type="submit">
-                     Salvar atividade
+                     Atualizar viagem
                   </Button>
                </div>
             </div>
