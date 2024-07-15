@@ -15,27 +15,33 @@ const CreateActivityModal = ({
    const { tripId } = useParams();
 
    async function creteActivity(event: FormEvent<HTMLFormElement>) {
-      event.preventDefault();
+      try {
+         event.preventDefault();
 
-      const data = new FormData(event.currentTarget);
+         const data = new FormData(event.currentTarget);
 
-      const title = data.get("title")?.toString();
-      const occurs_at = data.get("occurs_at")?.toString();
+         const title = data.get("title")?.toString();
+         const occurs_at = data.get("occurs_at")?.toString();
 
-      await api.post(`trips/${tripId}/activities`, {
-         title,
-         occurs_at,
-      });
+         await api.post(`trips/${tripId}/activities`, {
+            title,
+            occurs_at,
+         });
 
-      handleCreateActivityModalClick();
+         handleCreateActivityModalClick();
 
-      toast.success("Atividade criada com sucesso!", {
-         position: "top-right",
-      });
+         toast.success("Atividade criada com sucesso!", {
+            position: "top-right",
+         });
 
-      setTimeout(() => {
-         window.document.location.reload();
-      }, 6000);
+         setTimeout(() => {
+            window.document.location.reload();
+         }, 6000);
+      } catch (error) {
+         toast.error("Erro ao criar atividade!", {
+            position: "top-right",
+         });
+      }
    }
 
    return (
