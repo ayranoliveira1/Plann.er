@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../../../lib/api";
 import { format } from "date-fns";
+import UpdateDestinationAndDateModal from "./update_destination_and_date_modal";
 
 interface Trip {
    id: string;
@@ -15,8 +16,17 @@ interface Trip {
 
 const DestinationAndDateHeader = () => {
    const [trip, setTrip] = useState<Trip | undefined>();
+   const [isDestinationAndDateModalOpen, setDestinationAndDateModalOpen] =
+      useState(false);
 
    const { tripId } = useParams();
+
+   function handleDestinationAndDateModalClick() {
+      if (isDestinationAndDateModalOpen === true) {
+         return setDestinationAndDateModalOpen(false);
+      }
+      setDestinationAndDateModalOpen(true);
+   }
 
    useEffect(() => {
       api.get(`trips/${tripId}`).then((response) => {
@@ -45,11 +55,22 @@ const DestinationAndDateHeader = () => {
 
             <div className="w-px h-6 bg-zinc-800"></div>
 
-            <Button variant="secondary">
+            <Button
+               onClick={handleDestinationAndDateModalClick}
+               variant="secondary"
+            >
                Alterar local/data
                <Settings2 className="size-5" />
             </Button>
          </div>
+
+         {isDestinationAndDateModalOpen && (
+            <UpdateDestinationAndDateModal
+               handleUpdateDestinationAndDateModalClick={
+                  handleDestinationAndDateModalClick
+               }
+            />
+         )}
       </header>
    );
 };
