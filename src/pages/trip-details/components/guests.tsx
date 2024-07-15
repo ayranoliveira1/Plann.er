@@ -1,8 +1,9 @@
-import { CheckCircle2, CircleDashed, UserCog } from "lucide-react";
+import { CheckCircle2, CircleDashed, UserRoundPlus } from "lucide-react";
 import Button from "../../../components/button";
 import { api } from "../../../lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CreateInviteGuestModal from "./create-invite-guest-modal";
 
 interface Participant {
    id: string;
@@ -12,6 +13,7 @@ interface Participant {
 }
 
 const Guests = () => {
+   const [isInviteModalOpen, setIsInviteModalOpen] = useState<boolean>(false);
    const [participants, setParticipants] = useState<Participant[]>([]);
 
    const { tripId } = useParams();
@@ -21,6 +23,13 @@ const Guests = () => {
          setParticipants(response.data.participants);
       });
    }, [tripId]);
+
+   function handleInviteModalClick() {
+      if (isInviteModalOpen === true) {
+         return setIsInviteModalOpen(false);
+      }
+      setIsInviteModalOpen(true);
+   }
 
    return (
       <div className="space-y-6">
@@ -49,10 +58,20 @@ const Guests = () => {
             ))}
          </div>
 
-         <Button variant="secondary" size="full">
-            <UserCog className="size-5" />
-            Gerenciar convidados
+         <Button
+            onClick={handleInviteModalClick}
+            variant="secondary"
+            size="full"
+         >
+            <UserRoundPlus className="size-5" />
+            Adicionar convidados
          </Button>
+
+         {isInviteModalOpen && (
+            <CreateInviteGuestModal
+               handleCreateGuestModalClick={handleInviteModalClick}
+            />
+         )}
       </div>
    );
 };
