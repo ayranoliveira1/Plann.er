@@ -1,7 +1,7 @@
 import { Mail, User, X } from "lucide-react";
 import Button from "../../../components/button";
 import { useParams } from "react-router-dom";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { api } from "../../../lib/api";
 import { toast } from "react-toastify";
 
@@ -12,6 +12,10 @@ interface CreateInviteGuestModalProps {
 const CreateInviteGuestModal = ({
    handleCreateGuestModalClick,
 }: CreateInviteGuestModalProps) => {
+   const [errorName, setErrorName] = useState<boolean>(false);
+   const [errorMinName, setErrorMinName] = useState<boolean>(false);
+   const [errorEmail, setErrorEmail] = useState<boolean>(false);
+
    const { tripId } = useParams();
 
    async function createGuest(event: FormEvent<HTMLFormElement>) {
@@ -23,7 +27,27 @@ const CreateInviteGuestModal = ({
          const name = data.get("name")?.toString();
          const email = data.get("email")?.toString();
 
-         if (!name || !email) return;
+         setErrorEmail(false);
+         setErrorMinName(false);
+
+         if (!name) {
+            setErrorName(true);
+            return;
+         }
+
+         setErrorName(false);
+
+         if (name.length < 4) {
+            setErrorMinName(true);
+            return;
+         }
+
+         setErrorMinName(false);
+
+         if (!email) {
+            setErrorEmail(true);
+            return;
+         }
 
          await api.post(`trips/${tripId}/invites`, {
             name,
@@ -76,6 +100,18 @@ const CreateInviteGuestModal = ({
                      />
                   </div>
 
+                  {errorName && (
+                     <span className="text-xs text-red-500 pl-1">
+                        Por favor, informe um nome
+                     </span>
+                  )}
+
+                  {errorMinName && (
+                     <span className="text-xs text-red-500 pl-1">
+                        Por favor, informe um nome com pelo menos 4 letras
+                     </span>
+                  )}
+
                   <div className="flex items-center gap-2">
                      <div className="h-14 px-4 flex-1 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
                         <Mail className="size-5 text-zinc-400" />
@@ -87,6 +123,12 @@ const CreateInviteGuestModal = ({
                         />
                      </div>
                   </div>
+
+                  {errorEmail && (
+                     <span className="text-xs text-red-500 pl-1">
+                        Por favor, informe um e-mail
+                     </span>
+                  )}
 
                   <Button size="full" type="submit">
                      Salvar participante
