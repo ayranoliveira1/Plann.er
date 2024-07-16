@@ -21,15 +21,43 @@ const UpdateDestinationAndDateModal = ({
       DateRange | undefined
    >();
 
+   const [errorDestination, setErrorDestination] = useState<boolean>(false);
+   const [errorMinDestination, setErrorMinDestination] =
+      useState<boolean>(false);
+   const [errorDate, setErrorDate] = useState<boolean>(false);
+   const [errorStarDate, setErrorStarDate] = useState<boolean>(false);
+
    const { tripId } = useParams();
 
    async function updateTrip() {
       try {
-         if (
-            !destination ||
-            !eventStartAndEndDate?.from ||
-            !eventStartAndEndDate?.to
-         ) {
+         setErrorDate(false);
+         setErrorMinDestination(false);
+         setErrorStarDate(false);
+
+         if (!destination) {
+            setErrorDestination(true);
+            return;
+         }
+
+         setErrorDestination(false);
+
+         if (destination.length < 4) {
+            setErrorMinDestination(true);
+            return;
+         }
+
+         setErrorMinDestination(false);
+
+         if (!eventStartAndEndDate?.from || !eventStartAndEndDate?.to) {
+            setErrorDate(true);
+            return;
+         }
+
+         setErrorDate(false);
+
+         if (eventStartAndEndDate?.from < new Date()) {
+            setErrorStarDate(true);
             return;
          }
 
@@ -101,6 +129,19 @@ const UpdateDestinationAndDateModal = ({
                      />
                   </div>
 
+                  {errorDestination && (
+                     <span className="text-sm text-red-500 pl-1">
+                        Por favor, informe um destino.
+                     </span>
+                  )}
+
+                  {errorMinDestination && (
+                     <span className="text-sm text-red-500 pl-1">
+                        Por favor, informe um destino com pelo menos 4
+                        caracteres.
+                     </span>
+                  )}
+
                   <div className="flex items-center gap-2 bg-zinc-950 h-14 px-4 border border-zinc-800 rounded-lg">
                      <button
                         onClick={handleDatePickerClick}
@@ -108,7 +149,9 @@ const UpdateDestinationAndDateModal = ({
                      >
                         <Calendar className="size-5 text-zinc-400" />
                         <span className="bg-transparent text-lg text-zinc-400 w-32 outline-none flex-1">
-                           {displayedDate || "Data"}
+                           {displayedDate ||
+                              "Data" ||
+                              eventStartAndEndDate?.from?.toString()}
                         </span>
                      </button>
 
@@ -139,6 +182,19 @@ const UpdateDestinationAndDateModal = ({
                         </div>
                      )}
                   </div>
+
+                  {errorDate && (
+                     <span className="text-sm text-red-500 pl-1">
+                        Por favor, informe uma data.
+                     </span>
+                  )}
+
+                  {errorStarDate && (
+                     <span className="text-sm text-red-500 pl-1">
+                        Por favor, a data de inição deve ser posterior a data
+                        atual.
+                     </span>
+                  )}
 
                   <Button onClick={updateTrip} size="full" type="submit">
                      Atualizar viagem
