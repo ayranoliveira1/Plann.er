@@ -56,7 +56,10 @@ const UpdateDestinationAndDateModal = ({
 
          setErrorDate(false);
 
-         if (eventStartAndEndDate?.from < new Date()) {
+         if (
+            eventStartAndEndDate?.from < new Date() ||
+            eventStartAndEndDate?.to < new Date()
+         ) {
             setErrorStarDate(true);
             return;
          }
