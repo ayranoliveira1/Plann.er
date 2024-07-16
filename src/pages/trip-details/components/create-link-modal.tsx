@@ -1,6 +1,6 @@
 import { Link2, Tag, X } from "lucide-react";
 import Button from "../../../components/button";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { api } from "../../../lib/api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,6 +12,10 @@ interface CreateLinkModalProps {
 const CreateLinkModal = ({
    handleCreateActivityModalClick,
 }: CreateLinkModalProps) => {
+   const [errorTitle, setErrorTitle] = useState<boolean>(false);
+   const [errorMinTitle, setErrorMinTitle] = useState<boolean>(false);
+   const [errorUrl, setErrorUrl] = useState<boolean>(false);
+
    const { tripId } = useParams();
 
    async function createLink(event: FormEvent<HTMLFormElement>) {
@@ -22,6 +26,26 @@ const CreateLinkModal = ({
 
          const title = data.get("title")?.toString();
          const url = data.get("url")?.toString();
+
+         setErrorUrl(false);
+         setErrorMinTitle(false);
+
+         if (!title) {
+            setErrorTitle(true);
+            return;
+         }
+
+         setErrorTitle(false);
+
+         if (title.length < 4) {
+            setErrorMinTitle(true);
+            return;
+         }
+
+         if (!url) {
+            setErrorUrl(true);
+            return;
+         }
 
          await api.post(`trips/${tripId}/links`, {
             title,
@@ -75,6 +99,18 @@ const CreateLinkModal = ({
                      />
                   </div>
 
+                  {errorTitle && (
+                     <span className="text-xs text-red-500 pl-1">
+                        Por favor, informe um tiúlo para o link
+                     </span>
+                  )}
+
+                  {errorMinTitle && (
+                     <span className="text-xs text-red-500 pl-1">
+                        Por favor, informe um tiúlo com pelo menos 4 caracteres
+                     </span>
+                  )}
+
                   <div className="flex items-center gap-2">
                      <div className="h-14 px-4 flex-1 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
                         <Link2 className="size-5 text-zinc-400" />
@@ -86,6 +122,12 @@ const CreateLinkModal = ({
                         />
                      </div>
                   </div>
+
+                  {errorUrl && (
+                     <span className="text-xs text-red-500 pl-1">
+                        Por favor, informe uma URL
+                     </span>
+                  )}
 
                   <Button size="full" type="submit">
                      Salvar <link rel="stylesheet" href="" />
