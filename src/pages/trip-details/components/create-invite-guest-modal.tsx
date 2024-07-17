@@ -1,4 +1,4 @@
-import { Mail, User, X } from "lucide-react";
+import { LoaderCircle, Mail, User, X } from "lucide-react";
 import Button from "../../../components/button";
 import { useParams } from "react-router-dom";
 import { FormEvent, useState } from "react";
@@ -15,6 +15,7 @@ const CreateInviteGuestModal = ({
    const [errorName, setErrorName] = useState<boolean>(false);
    const [errorMinName, setErrorMinName] = useState<boolean>(false);
    const [errorEmail, setErrorEmail] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(false);
 
    const { tripId } = useParams();
 
@@ -48,6 +49,8 @@ const CreateInviteGuestModal = ({
             setErrorEmail(true);
             return;
          }
+
+         setLoading(true);
 
          await api.post(`trips/${tripId}/invites`, {
             name,
@@ -130,9 +133,16 @@ const CreateInviteGuestModal = ({
                      </span>
                   )}
 
-                  <Button size="full" type="submit">
-                     Salvar participante
-                  </Button>
+                  {loading ? (
+                     <Button size="full" type="submit">
+                        <LoaderCircle className="size-5 animate-spin" />
+                        Salvar participante
+                     </Button>
+                  ) : (
+                     <Button size="full" type="submit">
+                        Salvar participante
+                     </Button>
+                  )}
                </form>
             </div>
          </div>

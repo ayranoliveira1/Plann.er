@@ -1,4 +1,4 @@
-import { Calendar, Tag, X } from "lucide-react";
+import { Calendar, LoaderCircle, Tag, X } from "lucide-react";
 import Button from "../../../components/button";
 import { FormEvent, useEffect, useState } from "react";
 import { api } from "../../../lib/api";
@@ -24,6 +24,7 @@ const CreateActivityModal = ({
    const [errorMinTitle, setErrorMinTitle] = useState<boolean>(false);
    const [errorOccursAt, setErrorOccursAt] = useState<boolean>(false);
    const [errorDateOccursAt, setErrorDateOccursAt] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(false);
 
    const [trip, setTrip] = useState<Trip | undefined>();
    const { tripId } = useParams();
@@ -76,6 +77,8 @@ const CreateActivityModal = ({
             setErrorDateOccursAt(true);
             return;
          }
+
+         setLoading(true);
 
          await api.post(`trips/${tripId}/activities`, {
             title,
@@ -166,9 +169,16 @@ const CreateActivityModal = ({
                      </span>
                   )}
 
-                  <Button size="full" type="submit">
-                     Salvar atividade
-                  </Button>
+                  {loading ? (
+                     <Button size="full" type="submit">
+                        <LoaderCircle className="size-5animate-spin" />
+                        Salvar atividade
+                     </Button>
+                  ) : (
+                     <Button size="full" type="submit">
+                        Salvar atividade
+                     </Button>
+                  )}
                </form>
             </div>
          </div>

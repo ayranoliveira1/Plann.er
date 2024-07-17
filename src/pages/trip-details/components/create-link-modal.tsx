@@ -1,4 +1,4 @@
-import { Link2, Tag, X } from "lucide-react";
+import { Link2, LoaderCircle, Tag, X } from "lucide-react";
 import Button from "../../../components/button";
 import { FormEvent, useState } from "react";
 import { api } from "../../../lib/api";
@@ -15,6 +15,7 @@ const CreateLinkModal = ({
    const [errorTitle, setErrorTitle] = useState<boolean>(false);
    const [errorMinTitle, setErrorMinTitle] = useState<boolean>(false);
    const [errorUrl, setErrorUrl] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(false);
 
    const { tripId } = useParams();
 
@@ -46,6 +47,8 @@ const CreateLinkModal = ({
             setErrorUrl(true);
             return;
          }
+
+         setLoading(true);
 
          await api.post(`trips/${tripId}/links`, {
             title,
@@ -129,9 +132,16 @@ const CreateLinkModal = ({
                      </span>
                   )}
 
-                  <Button size="full" type="submit">
-                     Salvar <link rel="stylesheet" href="" />
-                  </Button>
+                  {loading ? (
+                     <Button size="full" type="submit">
+                        <LoaderCircle className="size-5 animate-spin" />
+                        Salvar link
+                     </Button>
+                  ) : (
+                     <Button size="full" type="submit">
+                        Salvar link
+                     </Button>
+                  )}
                </form>
             </div>
          </div>

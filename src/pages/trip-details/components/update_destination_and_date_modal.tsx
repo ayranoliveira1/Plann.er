@@ -1,4 +1,4 @@
-import { Calendar, MapPin, X } from "lucide-react";
+import { Calendar, LoaderCircle, MapPin, X } from "lucide-react";
 import Button from "../../../components/button";
 import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
@@ -26,6 +26,7 @@ const UpdateDestinationAndDateModal = ({
       useState<boolean>(false);
    const [errorDate, setErrorDate] = useState<boolean>(false);
    const [errorStarDate, setErrorStarDate] = useState<boolean>(false);
+   const [loading, setLoading] = useState<boolean>(false);
 
    const { tripId } = useParams();
 
@@ -63,6 +64,8 @@ const UpdateDestinationAndDateModal = ({
             setErrorStarDate(true);
             return;
          }
+
+         setLoading(true);
 
          await api.put(`trips/${tripId}`, {
             destination,
@@ -199,9 +202,16 @@ const UpdateDestinationAndDateModal = ({
                      </span>
                   )}
 
-                  <Button onClick={updateTrip} size="full" type="submit">
-                     Atualizar viagem
-                  </Button>
+                  {loading ? (
+                     <Button onClick={updateTrip} size="full" type="submit">
+                        <LoaderCircle className="animate-spin size-5" />
+                        Atualizar viagem
+                     </Button>
+                  ) : (
+                     <Button onClick={updateTrip} size="full" type="submit">
+                        Atualizar viagem
+                     </Button>
+                  )}
                </div>
             </div>
          </div>
