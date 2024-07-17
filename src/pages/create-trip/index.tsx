@@ -15,6 +15,7 @@ function CreateTrip() {
    const [isConfirmTripModalOpen, setIsConfirmTripModalOpen] =
       useState<boolean>(false);
    const [repeatedEmail, setRepeatedEmail] = useState<string>("hidden");
+   const [loading, setLoading] = useState<boolean>(false);
 
    // salvar informções para enviar para o servidor
    const [destination, setDestination] = useState<string>("");
@@ -88,6 +89,8 @@ function CreateTrip() {
       )
          return;
 
+      setLoading(true);
+
       const response = await api.post("/trips", {
          destination,
          starts_at: eventStartAndEndDate?.from,
@@ -158,7 +161,7 @@ function CreateTrip() {
             <ConfirmTripModal
                handleConfirmTripModalClick={handleConfirmTripModalClick}
                createTrip={createTrip}
-               repeatedEmail={repeatedEmail}
+               loading={loading}
                setOwnerEmail={setOwnerEmail}
                setOwnerName={setOwnerName}
             />

@@ -1,19 +1,19 @@
-import { Mail, User, X } from "lucide-react";
+import { LoaderCircle, Mail, User, X } from "lucide-react";
 import { FormEvent } from "react";
 import Button from "../../../components/button";
 
 interface ConfirmTripModalProps {
    handleConfirmTripModalClick: () => void;
    createTrip: (event: FormEvent<HTMLFormElement>) => void;
-   repeatedEmail: string;
    setOwnerName: (ownerName: string) => void;
    setOwnerEmail: (ownerEmail: string) => void;
+   loading: boolean;
 }
 
 const ConfirmTripModal = ({
    handleConfirmTripModalClick,
    createTrip,
-   repeatedEmail,
+   loading,
    setOwnerName,
    setOwnerEmail,
 }: ConfirmTripModalProps) => {
@@ -67,15 +67,17 @@ const ConfirmTripModal = ({
                      />
                   </div>
 
-                  <Button type="submit" size="full">
-                     Confirmar criação da viagem
-                  </Button>
+                  {loading ? (
+                     <Button type="submit" size="full">
+                        <LoaderCircle className="animate-spin size-5" />
+                        Confirmar criação da viagem
+                     </Button>
+                  ) : (
+                     <Button type="submit" size="full">
+                        Confirmar criação da viagem
+                     </Button>
+                  )}
                </form>
-               <p
-                  className={`text-sm ${repeatedEmail} text-red-500 px-1 pt-[-20px]`}
-               >
-                  Este email já foi adicionado
-               </p>
             </div>
          </div>
       </div>
