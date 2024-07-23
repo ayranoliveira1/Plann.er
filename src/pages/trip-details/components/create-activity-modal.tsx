@@ -171,7 +171,7 @@ const CreateActivityModal = ({
 
                   {loading ? (
                      <Button size="full" type="submit">
-                        <LoaderCircle className="size-5animate-spin" />
+                        <LoaderCircle className="size-5 animate-spin" />
                         Salvar atividade
                      </Button>
                   ) : (
