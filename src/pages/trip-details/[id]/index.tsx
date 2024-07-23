@@ -1,11 +1,12 @@
 import { Plus } from "lucide-react";
 import { useState } from "react";
-import CreateActivityModal from "./components/create-activity-modal";
-import ImportantLinks from "./components/important-links";
-import Guests from "./components/guests";
-import Activities from "./components/activities";
+
+import Button from "../../../components/button";
 import DestinationAndDateHeader from "./components/destination-and-date-header";
-import Button from "../../components/button";
+import Activities from "./components/activities";
+import Guests from "./components/guests";
+import ImportantLinks from "./components/important-links";
+import CreateActivityModal from "./components/create-activity-modal";
 
 const TripDetailsPage = () => {
    const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =

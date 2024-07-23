@@ -1,10 +1,10 @@
 import { Calendar, LoaderCircle, MapPin, X } from "lucide-react";
-import Button from "../../../components/button";
+import Button from "../../../../components/button";
 import { useState } from "react";
 import { DateRange, DayPicker } from "react-day-picker";
 import { format } from "date-fns";
 import "react-day-picker/dist/style.css";
-import { api } from "../../../lib/api";
+import { api } from "../../../../lib/api";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 

@@ -1,6 +1,6 @@
 import { LoaderCircle, X } from "lucide-react";
-import Button from "../../../components/button";
-import { api } from "../../../lib/api";
+import Button from "../../../../components/button";
+import { api } from "../../../../lib/api";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";

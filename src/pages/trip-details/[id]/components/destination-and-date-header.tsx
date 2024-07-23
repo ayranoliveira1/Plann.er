@@ -1,8 +1,8 @@
 import { Calendar, MapPin, Settings2 } from "lucide-react";
-import Button from "../../../components/button";
+import Button from "../../../../components/button";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { api } from "../../../lib/api";
+import { api } from "../../../../lib/api";
 import { format } from "date-fns";
 import UpdateDestinationAndDateModal from "./update_destination_and_date_modal";
 

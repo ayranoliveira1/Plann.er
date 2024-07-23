@@ -1,5 +1,5 @@
 import { CircleCheck, Trash2 } from "lucide-react";
-import { api } from "../../../lib/api";
+import { api } from "../../../../lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";

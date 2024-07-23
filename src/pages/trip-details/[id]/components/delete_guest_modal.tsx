@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Button from "../../../components/button";
+import Button from "../../../../components/button";
 import { LoaderCircle, X } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { api } from "../../../lib/api";
+import { api } from "../../../../lib/api";
 
 interface DeleteGuestModalProps {
    handleDeleteModalClick: () => void;

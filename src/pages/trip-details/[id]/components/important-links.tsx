@@ -1,6 +1,6 @@
 import { Link2, Plus, Trash2 } from "lucide-react";
-import Button from "../../../components/button";
-import { api } from "../../../lib/api";
+import Button from "../../../../components/button";
+import { api } from "../../../../lib/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateLinkModal from "./create-link-modal";

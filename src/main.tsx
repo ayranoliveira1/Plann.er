@@ -4,7 +4,7 @@ import "./index.css";
 import ToastProvider from "./components/toast";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import CreateTrip from "./pages/create-trip";
-import TripDetailsPage from "./pages/trip-details";
+import TripDetailsPage from "./pages/trip-details/[id]";
 
 const router = createBrowserRouter([
    {
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
    },
 
    {
-      path: "/trips/:tripId",
+      path: "/trip-details/:tripId",
       element: <TripDetailsPage />,
    },
 ]);

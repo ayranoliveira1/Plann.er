@@ -4,8 +4,8 @@ import {
    Trash2,
    UserRoundPlus,
 } from "lucide-react";
-import Button from "../../../components/button";
-import { api } from "../../../lib/api";
+import Button from "../../../../components/button";
+import { api } from "../../../../lib/api";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CreateInviteGuestModal from "./create-invite-guest-modal";
