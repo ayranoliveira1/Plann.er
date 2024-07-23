@@ -1,9 +1,10 @@
-import { CircleCheck } from "lucide-react";
+import { CircleCheck, Trash2 } from "lucide-react";
 import { api } from "../../../lib/api";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import DeleteActivityModal from "./delete_activity_modal";
 
 interface Activity {
    id: string;
@@ -19,6 +20,15 @@ const Activities = () => {
    const { tripId } = useParams();
 
    const [activities, setActivities] = useState<Activity[]>([]);
+   const [isDeleteActivityModal, setIsDeleteActivityModal] =
+      useState<boolean>(false);
+
+   function handleDeleteActivityModalClick() {
+      if (isDeleteActivityModal === true) {
+         return setIsDeleteActivityModal(false);
+      }
+      setIsDeleteActivityModal(true);
+   }
 
    useEffect(() => {
       api.get(`trips/${tripId}/activities`).then((response) => {
@@ -49,9 +59,26 @@ const Activities = () => {
                                  {activitiy.title}
                               </span>
 
-                              <span className="text-zinc-400 tetx-sm ml-auto">
-                                 {format(activitiy.occurs_at, "HH:mm")}
-                              </span>
+                              <div className="ml-auto flex items-center gap-2">
+                                 <span className="text-zinc-400 text-sm ">
+                                    {format(activitiy.occurs_at, "HH:mm")}
+                                 </span>
+
+                                 <button
+                                    onClick={handleDeleteActivityModalClick}
+                                 >
+                                    <Trash2 className="size-4 text-zinc-500 hover:text-red-500 " />
+                                 </button>
+
+                                 {isDeleteActivityModal && (
+                                    <DeleteActivityModal
+                                       activityId={activitiy.id}
+                                       handleDeleteActivityModalClick={
+                                          handleDeleteActivityModalClick
+                                       }
+                                    />
+                                 )}
+                              </div>
                            </div>
                         </div>
                      ))}
