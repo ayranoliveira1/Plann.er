@@ -1,9 +1,10 @@
-import { Link2, Plus } from "lucide-react";
+import { Link2, Plus, Trash2 } from "lucide-react";
 import Button from "../../../components/button";
 import { api } from "../../../lib/api";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CreateLinkModal from "./create-link-modal";
+import DeleteLinkModal from "./delete_link_modal";
 
 interface Links {
    id: string;
@@ -15,6 +16,7 @@ const ImportantLinks = () => {
    const [links, setLinks] = useState<Links[]>([]);
    const [isCreateLinkModalOpen, setIsCreateLinkModalOpen] =
       useState<boolean>(false);
+   const [isDeleteLinkModal, setIsDeleteLinkModal] = useState<boolean>(false);
 
    const handleCreateLinkModalClick = () => {
       if (isCreateLinkModalOpen === true) {
@@ -23,7 +25,15 @@ const ImportantLinks = () => {
       setIsCreateLinkModalOpen(true);
    };
 
+   const handleDeleteLinkModalClick = () => {
+      if (isDeleteLinkModal === true) {
+         return setIsDeleteLinkModal(false);
+      }
+      setIsDeleteLinkModal(true);
+   };
+
    const { tripId } = useParams();
+   const navigate = useNavigate();
 
    useEffect(() => {
       api.get(`trips/${tripId}/links`).then((response) => {
@@ -52,7 +62,26 @@ const ImportantLinks = () => {
                         {link.url}
                      </a>
                   </div>
-                  <Link2 className="size-5 text-zinc-400 shrink-0" />
+                  <div className="flex items-center gap-2">
+                     <Link2 className="size-5 text-zinc-400 shrink-0" />
+
+                     <button
+                        onClick={async () => {
+                           await api.delete(`trips/${tripId}/links/${link.id}`);
+
+                           navigate(0);
+                        }}
+                     >
+                        <Trash2 className="size-4 text-zinc-500 hover:text-red-500 " />
+                     </button>
+                  </div>
+
+                  {isDeleteLinkModal && (
+                     <DeleteLinkModal
+                        handleDeleteLinkModalClick={handleDeleteLinkModalClick}
+                        linkId={link.id}
+                     />
+                  )}
                </div>
             ))}
          </div>
