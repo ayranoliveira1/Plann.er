@@ -40,7 +40,7 @@ const DestinationAdnDateStep = ({
 
    return (
       <div className="lg:h-16 px-4 lg:bg-zinc-900 rounded-xl lg:flex-row flex-col flex items-center gap-5 shadow-shape">
-         <div className="flex items-center gap-2 lg:flex-1 lg:bg-transparent p-4 lg:p-0 rounded-xl shadow-shape lg:shadow-none bg-zinc-900">
+         <div className="flex w-[305px] lg:w-full items-center gap-2 lg:flex-1 lg:bg-transparent p-4 lg:p-0 rounded-xl shadow-shape lg:shadow-none bg-zinc-900">
             <MapPin className="size-5 text-zinc-400" />
             <input
                type="text"
