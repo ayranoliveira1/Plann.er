@@ -13,11 +13,11 @@ const InviteGuestsStep = ({
    emailToInvite,
 }: InviteGuestsStepProps) => {
    return (
-      <div className="h-16 px-4 bg-zinc-900 rounded-xl flex items-center gap-5 shadow-shape">
+      <div className="lg:h-16 px-4 lg:bg-zinc-900 rounded-xl flex lg:flex-row flex-col items-center gap-5 lg:shadow-shape">
          <button
             onClick={handleGuestModalClick}
             type="button"
-            className="flex items-center gap-2 flex-1 text-left"
+            className="flex items-center w-[305px] lg:w-full p-4 lg:p-0 bg-zinc-900 lg:bg-transparent rounded-xl gap-2 flex-1 text-left shadow-shape lg:shadow-none"
          >
             <UserRoundPlus className="size-5 text-zinc-400" />
 
@@ -32,7 +32,7 @@ const InviteGuestsStep = ({
             )}
          </button>
 
-         <div className="w-px h-6 bg-zinc-800"></div>
+         <div className="w-px h-6 hidden lg:block bg-zinc-800"></div>
 
          <Button onClick={handleConfirmTripModalClick}>
             Confirmar viagem
