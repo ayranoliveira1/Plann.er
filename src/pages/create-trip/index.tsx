@@ -110,7 +110,7 @@ function CreateTrip() {
          <div className="max-w-3xl w-full px-6 text-center space-y-10">
             <div className="flex flex-col items-center gap-3">
                <img src="/logo.svg" alt="Plann.er" />
-               <p className="text-zinc-300 text-lg">
+               <p className="text-zinc-300 text-[3.5vw] lg:text-lg">
                   Convide seus amigos e planeje sua próxima viagem!
                </p>
             </div>
