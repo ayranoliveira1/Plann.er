@@ -133,7 +133,7 @@ function CreateTrip() {
                )}
             </div>
 
-            <p className="text-zinc-500 text-sm">
+            <p className="text-zinc-500 text-[2.5vw] lg:text-sm">
                Ao planejar sua viagem pela plann.er você automaticamente
                concorda <br /> com nossos{" "}
                <a href="" className="text-zinc-300 underline">
