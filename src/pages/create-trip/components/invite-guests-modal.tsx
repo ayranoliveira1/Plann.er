@@ -71,7 +71,7 @@ const InviteGuestsModal = ({
                      />
                   </div>
 
-                  <Button type="submit">
+                  <Button type="submit" size="full">
                      Convidar
                      <Plus className="size-3" />
                   </Button>
