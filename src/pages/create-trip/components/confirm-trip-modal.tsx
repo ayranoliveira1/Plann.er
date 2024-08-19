@@ -67,8 +67,6 @@ const ConfirmTripModal = ({
                      />
                   </div>
 
-                  <div>teste 2</div>
-
                   {loading ? (
                      <Button type="submit" size="full">
                         <LoaderCircle className="animate-spin size-5" />
