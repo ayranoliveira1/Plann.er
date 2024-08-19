@@ -67,7 +67,7 @@ const ConfirmTripModal = ({
                      />
                   </div>
 
-                  <div>testando</div>
+                  <div>teste 2</div>
 
                   {loading ? (
                      <Button type="submit" size="full">
