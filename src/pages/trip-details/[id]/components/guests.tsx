@@ -89,8 +89,6 @@ const Guests = () => {
                            guestId={participant.id}
                         />
                      )}
-
-                     <div>test 2</div>
                   </div>
                </div>
             ))}
